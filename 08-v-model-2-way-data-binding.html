@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Getting started</title>
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css"
+        />
+    </head>
+    <body>
+        <div id="app"></div>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.7.16/vue.min.js"></script>
+        <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/3.5.4/vue.global.min.js"></script> -->
+
+        <script>
+            const root = new Vue({
+                data() {
+                    return {
+                        credentials: {
+                            username: "",
+                            password: "",
+                        },
+                        errors: {
+                            password: "",
+                        },
+                    };
+                },
+                methods: {
+                    login(/*event*/) {
+                        // event.preventDefault();
+
+                        const credentials = {
+                            username: this.credentials.username,
+                            password: this.credentials.password,
+                        };
+
+                        // if (this.validatePassword()) {
+                        //     console.log("All good!");
+                        //     console.log(credentials);
+                        // } else {
+                        //     console.log("Check password and correct the error");
+                        // }
+
+                        console.log("All good!");
+                        console.log(credentials);
+                    },
+                    validatePassword(event) {
+                        console.log(event);
+
+                        // if (!event || event.key === "Enter") {
+                        if (/[A-Z]/.test(this.credentials.password) === false) {
+                            this.errors.password =
+                                "There should be at least 1 uppercase letter";
+                            return false;
+                        }
+
+                        // other checks
+                        // ...
+
+                        this.errors.password = "";
+                        // }
+
+                        return true; // all good!
+                    },
+                },
+                template: `
+                    <div class="container">
+                        <h1>Sign in</h1>
+                        <hr />
+
+                        <form @submit.prevent="login">
+                            <div class="mb-3 row">
+                                <label
+                                    class="col-sm-2 col-form-label"
+                                    for="username"
+                                >
+                                    Username
+                                </label>
+                                <span class="col-sm-10">
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="username"
+                                        name="username"
+                                        v-model.trim="credentials.username"
+                                    />
+                                </span>
+                            </div>
+
+                            <div class="mb-3 row">
+                                <label
+                                    class="col-sm-2 col-form-label"
+                                    for="password"
+                                >
+                                    Password
+                                </label>
+                                <span class="col-sm-10">
+                                    <input
+                                        type="password"
+                                        class="form-control"
+                                        id="password"
+                                        name="password"
+                                        v-model.trim="credentials.password"
+                                        @keyup.enter="validatePassword"
+                                    />
+                                    <div class="text-danger">{{ errors.password }}</div>
+                                </span>
+                            </div>
+
+                            <div>
+                                <button
+                                    type="submit"
+                                    class="btn btn-sm btn-primary"
+                                >
+                                    Login
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                `,
+            });
+
+            root.$mount("#app");
+        </script>
+    </body>
+</html>

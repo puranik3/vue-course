@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Getting started</title>
+    </head>
+    <body>
+        <div id="app"></div>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.7.16/vue.min.js"></script>
+
+        <script>
+            const root = new Vue({
+                // el: "#app",
+                template: `
+                    <div>Hello Vue</div>
+                `,
+            });
+
+            // do something else
+            // code...
+
+            root.$mount("#app");
+        </script>
+    </body>
+</html>

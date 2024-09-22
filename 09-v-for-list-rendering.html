@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>List rendering using v-for</title>
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css"
+        />
+    </head>
+    <body>
+        <div id="app"></div>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.7.16/vue.min.js"></script>
+        <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/3.5.4/vue.global.min.js"></script> -->
+
+        <script src="scripts/workshops.js"></script>
+
+        <script>
+            const root = new Vue({
+                data() {
+                    return {
+                        workshops: workshops,
+                    };
+                },
+                methods: {
+                    formatDate(strDate) {
+                        const date = new Date(strDate);
+                        return date.toString().substring(0, 15);
+                    },
+                },
+                template: `
+                    <div class="container">
+                        <h1>List of workshops</h1>
+                        <hr />
+
+                        <div class="row">
+                            <div
+                                class="col-12 col-md-4 d-flex my-3"
+                                v-for="(workshop, index) of workshops"
+                                :key="workshop.id"
+                            >
+                                <div class="card p-3 w-100">
+                                    <img
+                                        :src="workshop.imageUrl"
+                                        :alt="workshop.name"
+                                        class="card-img-top"
+                                    />
+                                    <div class="card-body">
+                                        <h5 class="card-title">{{ workshop.name }}</h5>
+                                        <div class="card-text">
+                                            <div>{{ index }}</div>
+                                            <div>
+                                                {{ workshop.location.city }}, {{ workshop.location.state }}
+                                            </div>
+                                            <div>
+                                                {{ formatDate( workshop.startDate ) }} - {{ formatDate( workshop.endDate ) }}
+                                            </div>
+                                        </div>
+                                        <a href="#" class="btn btn-primary">Go somewhere</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `,
+            });
+
+            root.$mount("#app");
+        </script>
+    </body>
+</html>

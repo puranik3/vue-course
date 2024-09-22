@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Getting started</title>
+    </head>
+    <body>
+        <div id="app"></div>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/3.5.4/vue.global.min.js"></script>
+
+        <script>
+            const root = Vue.createApp({
+                // Vue 2 -> data is either an object / function returning the data
+                // Vue 3 -> data property is a function returning the data
+                data() {
+                    return {
+                        message:
+                            "How are you doing? I hope you are the bext version of yourself today!",
+                    };
+                },
+                template: `
+                    <section>
+                        <div>Hello Vue</div>
+                        <p @click="message = 'I am perfectly fine!'">{{ message }}</p>
+                    </section>
+                `,
+            });
+
+            console.log(root);
+
+            root.mount("#app");
+        </script>
+    </body>
+</html>

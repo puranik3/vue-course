@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Conditional rendering</title>
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css"
+        />
+    </head>
+    <body>
+        <div id="app"></div>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.7.16/vue.min.js"></script>
+        <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/3.5.4/vue.global.min.js"></script> -->
+
+        <script>
+            const root = new Vue({
+                data() {
+                    return {
+                        couponCode: "NEW30",
+                        btnClasses: "btn btn-sm btn-primary",
+                    };
+                },
+                template: `
+                    <div class="container">
+                        <h1>My Cart</h1>
+                        <hr />
+
+                        <button
+                            @click="couponCode = ''"
+                            v-if="couponCode !== ''"
+                            :class="btnClasses"
+                        >
+                            Remove coupon
+                        </button>
+                        <button
+                            @click="couponCode = 'NEW30'"
+                            v-if="couponCode === ''"
+                            :class="btnClasses"
+                        >
+                            Add coupon NEW30
+                        </button>
+
+                        <div v-if="couponCode !== ''">Applied coupon <span class="badge bg-dark">{{ couponCode }}</span></div>
+                    </div>
+                `,
+            });
+
+            root.$mount("#app");
+        </script>
+    </body>
+</html>

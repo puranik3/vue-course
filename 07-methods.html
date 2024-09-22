@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Conditional rendering</title>
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css"
+        />
+    </head>
+    <body>
+        <div id="app"></div>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.7.16/vue.min.js"></script>
+        <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/3.5.4/vue.global.min.js"></script> -->
+
+        <script>
+            const root = new Vue({
+                data() {
+                    return {
+                        plan: "Pro",
+                    };
+                },
+                methods: {
+                    logPlan() {
+                        console.log(this.plan);
+                    },
+                    changePlan(plan, event) {
+                        console.log(event);
+
+                        this.logPlan();
+                        this.plan = plan;
+                    },
+                    showPlan(event) {
+                        console.log(event);
+
+                        alert(this.plan);
+                    },
+                },
+                template: `
+                    <div class="container">
+                        <h1>GitHub plan details</h1>
+                        <hr />
+
+                        <p>You are on {{ plan }} plan</p>
+
+                        <section @click="showPlan">
+                            <div v-if="plan === 'Free'">
+                                You can create an unlimited number of public repositories
+                            </div>
+                            <div v-else-if="plan === 'Premium'">
+                                You can create an unlimited number of private repositories
+                            </div>
+                            <div v-else>
+                                Apart from the features available in the Premium plan, you can use GitHub Co-pilot
+                            </div>
+                        </section>
+
+                        <section>
+                            <button
+                                v-if="plan !== 'Free'"
+                                @click="changePlan( 'Free', $event )"
+                                class="btn btn-sm btn-primary"
+                            >
+                                Switch to Free plan
+                            </button>
+                            <button
+                                v-if="plan !== 'Premium'"
+                                @click="changePlan( 'Premium', $event )"
+                                class="btn btn-sm btn-primary"
+                            >
+                                Switch to Premium plan
+                            </button>
+                            <button
+                                v-if="plan !== 'Pro'"
+                                @click="changePlan( 'Pro', $event )"
+                                class="btn btn-sm btn-primary"
+                            >
+                                Switch to Pro plan
+                            </button>
+                        </section>
+                    </div>
+                `,
+            });
+
+            root.$mount("#app");
+        </script>
+    </body>
+</html>
