@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Conditional Inline Styling</title>
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css"
+        />
+    </head>
+    <body>
+        <div id="app"></div>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.7.16/vue.min.js"></script>
+        <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/3.5.4/vue.global.min.js"></script> -->
+
+        <script>
+            const root = new Vue({
+                data() {
+                    return {
+                        message: "Something went wrong",
+                        status: "error",
+                    };
+                },
+                computed: {
+                    // defined as methods but accessed as properties
+                    messageStyle() {
+                        if (this.status === "error") {
+                            // return "border-color: red; background-color: tomato;";
+                            return {
+                                borderColor: "red",
+                                backgroundColor: "tomato",
+                            };
+                        } else if (this.status === "warning") {
+                            // return "border-color: yellow; background-color: goldenrod;";
+                            return {
+                                borderColor: "yellow",
+                                backgroundColor: "goldenrod",
+                            };
+                        }
+                    },
+                },
+                methods: {
+                    setErrorMessage() {
+                        this.message = "Something went wrong";
+                        this.status = "error";
+                    },
+                    setWarningMessage() {
+                        this.message =
+                            "Your data will take some time to reflect";
+                        this.status = "warning";
+                    },
+                },
+                template: `
+                    <div class="container">
+                        <div
+                            style="border: 1px solid black; border-radius: 4px; padding: 12px; margin: 16px 0;"
+                            :style="messageStyle"
+                        >
+                            {{ message }}
+                        </div>
+
+                        <button @click="setErrorMessage" class="btn btn-sm btn-danger">Set error message</button>
+                        <button @click="setWarningMessage" class="btn btn-sm btn-warning">Set warning message</button>
+                    </div>
+                `,
+            });
+
+            root.$mount("#app");
+        </script>
+    </body>
+</html>

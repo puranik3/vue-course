@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Virtual DOM</title>
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css"
+        />
+    </head>
+    <body>
+        <div id="app"></div>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.7.16/vue.min.js"></script>
+        <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/3.5.4/vue.global.min.js"></script> -->
+
+        <script>
+            /*
+                Without a key
+                ---
+
+                Before (add at the beginning)
+                <li>Apples</li> -> Apples to Pineapples (text DOM manipulation)
+                <li>Oranges</li> -> Oranges -> Apples (text DOM manipulation)
+                <li>Bananas</li> -> Bananas -> Oranges (text DOM manipulation)
+                Create a new li -> DOM manipulation (new DOM node with text Bananas)
+
+                After (add at the beginning)
+                <li>Pineapples</li>
+                <li>Apples</li>
+                <li>Oranges</li>
+                <li>Bananas</li>
+
+                -------------------------------------------------
+
+                With a key...
+                ---
+
+                Before (add at the beginning)
+                Create a new li -> DOM manipulation (new DOM node with text Pineapples)
+                <li key="1">Apples</li>
+                <li key="2">Oranges</li>
+                <li key="3">Bananas</li>
+
+                After (add at the beginning)
+                <li key="4">Pineapples</li> -> DOM manipulation (new DOM node with text Bananas)
+                <li key="1">Apples</li>
+                <li key="2">Oranges</li>
+                <li key="3">Bananas</li>
+            */
+            const root = new Vue({
+                data() {
+                    return {
+                        fruits: [
+                            { id: 1, name: "Apples" },
+                            { id: 2, name: "Oranges" },
+                            { id: 3, name: "Bananas" },
+                        ],
+                        nextId: 4,
+                        name: "",
+                    };
+                },
+                methods: {
+                    addFruitAtTheBeginning() {
+                        this.fruits.unshift({
+                            id: this.nextId,
+                            name: this.name,
+                        });
+
+                        ++this.nextId;
+                        this.name = "";
+                    },
+                    addFruitAtTheEnd() {
+                        this.fruits.push({
+                            id: this.nextId,
+                            name: this.name,
+                        });
+
+                        ++this.nextId;
+                        this.name = "";
+                    },
+                },
+                template: `
+                    <div class="container">
+                        <h1>List of fruits</h1>
+                        <hr />
+
+                        <ul class="list-group">
+                            <li
+                                class="list-group-item"
+                                v-for="fruit in fruits"
+                                :key="fruit.id"
+                            >
+                                {{ fruit.name }}
+                            </li>
+                        </ul>
+
+                        <h2 class="mt-4 mb-3">Add a new fruit</h2>
+                        <form @submit.prevent="addFruitAtTheBeginning">
+                            <input
+                                type="text"
+                                placeholder="Strawberries"
+                                class="form-control"
+                                v-model.trim="name"
+                            />
+
+                            <button
+                                class="btn btn-sm btn-primary mt-3"
+                                type="submit"
+                            >
+                                Add fruit
+                            </button>
+                        </form>
+                    </div>
+                `,
+            });
+
+            root.$mount("#app");
+        </script>
+    </body>
+</html>
